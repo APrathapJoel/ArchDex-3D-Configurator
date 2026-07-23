@@ -10,7 +10,7 @@ export function getFloorCount(buildingType) {
         case 'apartment': return 5;
         case 'office-building': return 10;
         case 'glass-corporate': return 8;
-        case 'university': return 5;
+        case 'university': return 6;
         case 'cathedral': return 1;
         default: return 1;
     }

@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-import { initScene, resetCamera, switchToExteriorView, switchToInteriorView, onWindowResize } from './scene.js?v=25';
-import { AnimationManager, animateCameraTo, animateColor, fadeIn, fadeOut, scaleIn } from './animations.js?v=25';
-import { createBuilding, updateBuildingColors, getBuildingInfo, BUILDING_TYPES, THEME_COLORS } from './buildings.js?v=25';
-import { createFeature, FEATURES } from './features.js?v=25';
-import { createFloorPlan } from './floorplans.js?v=25';
-import { initControls, getState, updateFloorSelector, updateBuildingInfo } from './controls.js?v=25';
-import { createEnvironment, updateEnvironment, disposeEnvironment } from './environment.js?v=25';
-import { getFloorCount, createFloorInterior, updateInteriorAnimations, disposeInterior } from './interiors.js?v=25';
-import { EditModeManager } from './editmode.js?v=25';
+import { initScene, resetCamera, switchToExteriorView, switchToInteriorView, onWindowResize } from './scene.js?v=26';
+import { AnimationManager, animateCameraTo, animateColor, fadeIn, fadeOut, scaleIn } from './animations.js?v=26';
+import { createBuilding, updateBuildingColors, getBuildingInfo, BUILDING_TYPES, THEME_COLORS } from './buildings.js?v=26';
+import { createFeature, FEATURES } from './features.js?v=26';
+import { createFloorPlan } from './floorplans.js?v=26';
+import { initControls, getState, updateFloorSelector, updateBuildingInfo } from './controls.js?v=26';
+import { createEnvironment, updateEnvironment, disposeEnvironment } from './environment.js?v=26';
+import { getFloorCount, createFloorInterior, updateInteriorAnimations, disposeInterior } from './interiors.js?v=26';
+import { EditModeManager } from './editmode.js?v=26';
 
 let scene, camera, renderer, controls;
 let animManager, editManager;
@@ -199,8 +199,8 @@ function handleFloorChange(floorIndex) {
   // Dynamically elevate camera target & camera height to focus on current floor
   if (controls && camera) {
     const floorY = floorIndex * floorHeight;
-    controls.target.set(0, floorY + 1.5, 0);
-    camera.position.set(camera.position.x, floorY + 18, Math.max(16, floorY * 0.5 + 16));
+    controls.target.set(0, floorY + 1.2, 0);
+    camera.position.set(0, floorY + 20, 22);
     controls.update();
   }
 }
