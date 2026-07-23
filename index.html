@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=23">
+    <link rel="stylesheet" href="style.css?v=24">
     <script type="importmap">
     {
       "imports": {
@@ -15,6 +15,21 @@
         "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.0/examples/jsm/"
       }
     }
+    </script>
+    <script>
+      window.onerror = function(msg) {
+        var el = document.getElementById('loading-overlay');
+        if (el) {
+          el.innerHTML = '<div style="color:#f87171;padding:24px;text-align:center;font-family:sans-serif;"><h3>⚠️ Loading Notice</h3><p>' + (msg || 'Unable to load 3D engine') + '</p><button onclick="location.reload()" style="padding:8px 16px;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:12px;">Reload Page</button></div>';
+        }
+      };
+      setTimeout(function() {
+        var el = document.getElementById('loading-overlay');
+        if (el && el.style.display !== 'none') {
+          el.style.opacity = '0';
+          setTimeout(function() { el.style.display = 'none'; }, 300);
+        }
+      }, 4000);
     </script>
 </head>
 <body>
@@ -530,6 +545,6 @@
     <!-- Tooltip container -->
     <div id="tooltip" class="hidden"></div>
 
-    <script type="module" src="js/main.js?v=23"></script>
+    <script type="module" src="js/main.js?v=24"></script>
 </body>
 </html>

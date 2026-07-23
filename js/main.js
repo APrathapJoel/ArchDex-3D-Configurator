@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-import { initScene, resetCamera, switchToExteriorView, switchToInteriorView, onWindowResize } from './scene.js?v=23';
-import { AnimationManager, animateCameraTo, animateColor, fadeIn, fadeOut, scaleIn } from './animations.js?v=23';
-import { createBuilding, updateBuildingColors, getBuildingInfo, BUILDING_TYPES, THEME_COLORS } from './buildings.js?v=23';
-import { createFeature, FEATURES } from './features.js?v=23';
-import { createFloorPlan } from './floorplans.js?v=23';
-import { initControls, getState, updateFloorSelector, updateBuildingInfo } from './controls.js?v=23';
-import { createEnvironment, updateEnvironment, disposeEnvironment } from './environment.js?v=23';
-import { getFloorCount, createFloorInterior, updateInteriorAnimations, disposeInterior } from './interiors.js?v=23';
-import { EditModeManager } from './editmode.js?v=23';
+import { initScene, resetCamera, switchToExteriorView, switchToInteriorView, onWindowResize } from './scene.js?v=24';
+import { AnimationManager, animateCameraTo, animateColor, fadeIn, fadeOut, scaleIn } from './animations.js?v=24';
+import { createBuilding, updateBuildingColors, getBuildingInfo, BUILDING_TYPES, THEME_COLORS } from './buildings.js?v=24';
+import { createFeature, FEATURES } from './features.js?v=24';
+import { createFloorPlan } from './floorplans.js?v=24';
+import { initControls, getState, updateFloorSelector, updateBuildingInfo } from './controls.js?v=24';
+import { createEnvironment, updateEnvironment, disposeEnvironment } from './environment.js?v=24';
+import { getFloorCount, createFloorInterior, updateInteriorAnimations, disposeInterior } from './interiors.js?v=24';
+import { EditModeManager } from './editmode.js?v=24';
 
 let scene, camera, renderer, controls;
 let animManager, editManager;
