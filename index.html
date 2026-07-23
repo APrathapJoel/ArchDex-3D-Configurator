@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchDex - Building Design Configurator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=23">
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.0/examples/jsm/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Initializing ArchDex...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- App container -->
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <div class="logo-area">
+                <span class="logo-icon">🏛️</span>
+                <div class="title-container">
+                    <h1>ArchDex</h1>
+                    <p class="subtitle">Interactive Building Design Configurator</p>
+                </div>
+            </div>
+            <div class="view-toggle">
+                <button id="btn-exterior-view" class="view-toggle-btn active">Exterior View</button>
+                <button id="btn-interior-view" class="view-toggle-btn">Interior View</button>
+            </div>
+        </header>
+
+        <!-- Main content area -->
+        <main id="main-content">
+            <!-- Left Sidebar -->
+            <aside id="left-sidebar" class="sidebar">
+                <!-- Panel 1: Color Theme -->
+                <div id="color-selection-panel" class="panel">
+                    <h2>Color Theme</h2>
+                    
+                    <!-- Color Palette Dropdown -->
+                    <div class="color-dropdown-wrapper">
+                        <label for="color-palette-select" class="dropdown-label">Color Palette:</label>
+                        <div class="custom-select-container">
+                            <span class="selected-color-preview" id="color-preview-dot" style="background-color: #F5F5F5;"></span>
+                            <select id="color-palette-select" class="color-dropdown">
+                                <option value="white" selected>White</option>
+                                <option value="beige">Beige</option>
+                                <option value="cream">Cream</option>
+                                <option value="brown">Brown</option>
+                                <option value="walnut">Walnut</option>
+                                <option value="wooden">Wooden</option>
+                                <option value="brick-red">Brick Red</option>
+                                <option value="peach">Peach</option>
+                                <option value="terracotta">Terracotta</option>
+                                <option value="light-gray">Light Gray</option>
+                                <option value="dark-gray">Dark Gray</option>
+                                <option value="black">Black</option>
+                                <option value="dark-blue">Dark Blue</option>
+                                <option value="olive-green">Olive Green</option>
+                                <option value="stone">Stone</option>
+                                <option value="sand">Sand</option>
+                                <option value="concrete">Concrete</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="color-swatch-grid">
+                        <div class="color-swatch active" data-color="white" style="--swatch-color: #F5F5F5;">
+                            <div class="swatch-circle"></div>
+                            <span>White</span>
+                        </div>
+                        <div class="color-swatch" data-color="beige" style="--swatch-color: #D4B896;">
+                            <div class="swatch-circle"></div>
+                            <span>Beige</span>
+                        </div>
+                        <div class="color-swatch" data-color="cream" style="--swatch-color: #FFFDD0;">
+                            <div class="swatch-circle"></div>
+                            <span>Cream</span>
+                        </div>
+                        <div class="color-swatch" data-color="brown" style="--swatch-color: #8B4513;">
+                            <div class="swatch-circle"></div>
+                            <span>Brown</span>
+                        </div>
+                        <div class="color-swatch" data-color="walnut" style="--swatch-color: #5C4033;">
+                            <div class="swatch-circle"></div>
+                            <span>Walnut</span>
+                        </div>
+                        <div class="color-swatch" data-color="wooden" style="--swatch-color: #8B6914;">
+                            <div class="swatch-circle"></div>
+                            <span>Wooden</span>
+                        </div>
+                        <div class="color-swatch" data-color="brick-red" style="--swatch-color: #CB4154;">
+                            <div class="swatch-circle"></div>
+                            <span>Brick Red</span>
+                        </div>
+                        <div class="color-swatch" data-color="peach" style="--swatch-color: #FFCBA4;">
+                            <div class="swatch-circle"></div>
+                            <span>Peach</span>
+                        </div>
+                        <div class="color-swatch" data-color="terracotta" style="--swatch-color: #E2725B;">
+                            <div class="swatch-circle"></div>
+                            <span>Terracotta</span>
+                        </div>
+                        <div class="color-swatch" data-color="light-gray" style="--swatch-color: #C0C0C0;">
+                            <div class="swatch-circle"></div>
+                            <span>Light Gray</span>
+                        </div>
+                        <div class="color-swatch" data-color="dark-gray" style="--swatch-color: #4A4A4A;">
+                            <div class="swatch-circle"></div>
+                            <span>Dark Gray</span>
+                        </div>
+                        <div class="color-swatch" data-color="black" style="--swatch-color: #1A1A1A;">
+                            <div class="swatch-circle"></div>
+                            <span>Black</span>
+                        </div>
+                        <div class="color-swatch" data-color="dark-blue" style="--swatch-color: #1B2A4A;">
+                            <div class="swatch-circle"></div>
+                            <span>Dark Blue</span>
+                        </div>
+                        <div class="color-swatch" data-color="olive-green" style="--swatch-color: #556B2F;">
+                            <div class="swatch-circle"></div>
+                            <span>Olive Green</span>
+                        </div>
+                        <div class="color-swatch" data-color="stone" style="--swatch-color: #928E85;">
+                            <div class="swatch-circle"></div>
+                            <span>Stone</span>
+                        </div>
+                        <div class="color-swatch" data-color="sand" style="--swatch-color: #C2B280;">
+                            <div class="swatch-circle"></div>
+                            <span>Sand</span>
+                        </div>
+                        <div class="color-swatch" data-color="concrete" style="--swatch-color: #808080;">
+                            <div class="swatch-circle"></div>
+                            <span>Concrete</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Building Selection -->
+                <div id="building-selection-panel" class="panel">
+                    <h2>Building Type</h2>
+                    
+                    <div class="category-header expanded">
+                        <span>Residential</span>
+                        <span class="chevron">▾</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="building-card active" data-building="modern-villa">
+                            <div class="card-icon">🏠</div>
+                            <div class="card-info">
+                                <h3>Modern Villa</h3>
+                                <p>Sleek minimalist single-story</p>
+                            </div>
+                        </div>
+                        <div class="building-card" data-building="contemporary-house">
+                            <div class="card-icon">🏡</div>
+                            <div class="card-info">
+                                <h3>Contemporary House</h3>
+                                <p>Two-story family home</p>
+                            </div>
+                        </div>
+                        <div class="building-card" data-building="apartment">
+                            <div class="card-icon">🏢</div>
+                            <div class="card-info">
+                                <h3>Apartment Building</h3>
+                                <p>Multi-story urban complex</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-header">
+                        <span>Commercial</span>
+                        <span class="chevron">▸</span>
+                    </div>
+                    <div class="category-content collapsed">
+                        <div class="building-card" data-building="office-building">
+                            <div class="card-icon">🏬</div>
+                            <div class="card-info">
+                                <h3>Office Building</h3>
+                                <p>10-floor corporate tower</p>
+                            </div>
+                        </div>
+                        <div class="building-card" data-building="glass-corporate">
+                            <div class="card-icon">🏗️</div>
+                            <div class="card-info">
+                                <h3>Glass Corporate</h3>
+                                <p>Fully glazed premium HQ</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-header">
+                        <span>Educational</span>
+                        <span class="chevron">▸</span>
+                    </div>
+                    <div class="category-content collapsed">
+                        <div class="building-card" data-building="university">
+                            <div class="card-icon">🎓</div>
+                            <div class="card-info">
+                                <h3>University</h3>
+                                <p>Grand 5-floor campus building</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-header">
+                        <span>Religious</span>
+                        <span class="chevron">▸</span>
+                    </div>
+                    <div class="category-content collapsed">
+                        <div class="building-card" data-building="cathedral">
+                            <div class="card-icon">⛪</div>
+                            <div class="card-info">
+                                <h3>Cathedral</h3>
+                                <p>Gothic-inspired grand cathedral</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Features -->
+                <div id="features-panel" class="panel">
+                    <h2>Architectural Features</h2>
+                    
+                    <div class="feature-category">
+                        <div class="feature-category-title">Exterior Features</div>
+                        
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-compound-wall" class="custom-checkbox">
+                            <label for="feature-compound-wall">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🧱 Compound Wall</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a compound wall.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-entrance-gate" class="custom-checkbox">
+                            <label for="feature-entrance-gate">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🚪 Entrance Gate</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add an entrance gate.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-garden" class="custom-checkbox">
+                            <label for="feature-garden">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🌳 Garden</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add lush landscaping and greenery.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-pool" class="custom-checkbox">
+                            <label for="feature-pool">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏊 Swimming Pool</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Include an outdoor pool.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-trees" class="custom-checkbox">
+                            <label for="feature-trees">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🌲 Trees</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add trees around the building.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-gazebo" class="custom-checkbox">
+                            <label for="feature-gazebo">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏕️ Gazebo</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add an outdoor gazebo.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-pergola" class="custom-checkbox">
+                            <label for="feature-pergola">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏗️ Pergola</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a pergola structure.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-outdoor-seating" class="custom-checkbox">
+                            <label for="feature-outdoor-seating">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🪑 Outdoor Seating</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add outdoor seating area.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-basketball" class="custom-checkbox">
+                            <label for="feature-basketball">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏀 Basketball Court</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a basketball court.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-playground" class="custom-checkbox">
+                            <label for="feature-playground">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🎪 Play Area</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a children's play area.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-parking" class="custom-checkbox">
+                            <label for="feature-parking">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🅿️ Parking Area</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a parking area.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-driveway" class="custom-checkbox">
+                            <label for="feature-driveway">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🛤️ Driveway</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a driveway.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-solar" class="custom-checkbox">
+                            <label for="feature-solar">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">☀️ Solar Panels</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Install eco-friendly solar panels.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-rooftop-garden" class="custom-checkbox">
+                            <label for="feature-rooftop-garden">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🌿 Rooftop Garden</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a rooftop garden.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-fountain" class="custom-checkbox">
+                            <label for="feature-fountain">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">⛲ Water Fountain</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a water fountain.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-security" class="custom-checkbox">
+                            <label for="feature-security">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏠 Security Cabin</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add a security cabin.">?</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-category">
+                        <div class="feature-category-title">Building Features</div>
+
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-balcony" class="custom-checkbox">
+                            <label for="feature-balcony">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏗️ Balconies</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add spacious balconies.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-terrace" class="custom-checkbox">
+                            <label for="feature-terrace">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🏖️ Extended Terraces</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add extended terraces.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-glass-roof" class="custom-checkbox">
+                            <label for="feature-glass-roof">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🔲 Glass Roofing</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add glass roofing elements.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-smart-lighting" class="custom-checkbox">
+                            <label for="feature-smart-lighting">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">💡 Smart Lighting</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add smart exterior lighting.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-glass-railing" class="custom-checkbox">
+                            <label for="feature-glass-railing">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🔳 Glass Railings</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add modern glass railings.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-facade-panels" class="custom-checkbox">
+                            <label for="feature-facade-panels">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">🎨 Façade Panels</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add decorative façade panels.">?</span>
+                        </div>
+                        <div class="feature-toggle">
+                            <input type="checkbox" id="feature-decorative-lighting" class="custom-checkbox">
+                            <label for="feature-decorative-lighting">
+                                <span class="checkbox-visual"></span>
+                                <span class="feature-name">✨ Decorative Lighting</span>
+                            </label>
+                            <span class="tooltip-trigger" data-tooltip="Add decorative ambient lighting.">?</span>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- Center viewport -->
+            <section id="viewport-container">
+                <div id="canvas-container"></div>
+
+                <button id="btn-enlarge-canvas" class="enlarge-btn" title="Toggle Fullscreen Screen Design Canvas">
+                    <span id="enlarge-icon">⤢</span> <span id="enlarge-text">Enlarge Screen</span>
+                </button>
+
+                <div class="viewport-controls">
+                    <span>Left Click + Drag: Rotate</span>
+                    <span>Scroll: Zoom</span>
+                    <span>Right Click + Drag: Pan</span>
+                </div>
+                
+                <div id="floor-selector" class="hidden">
+                    <div class="floor-title">Floor</div>
+                    <!-- Floor buttons will be injected here by JS -->
+                </div>
+
+                <!-- Edit Mode Toolbar -->
+                <div id="edit-toolbar" class="hidden">
+                    <button id="edit-rotate" class="edit-tool-btn" title="Rotate 15°">🔄 Rotate</button>
+                    <button id="edit-delete" class="edit-tool-btn" title="Delete">🗑️ Delete</button>
+                    <button id="edit-duplicate" class="edit-tool-btn" title="Duplicate">📋 Copy</button>
+                    <button id="edit-undo" class="edit-tool-btn" title="Undo (Ctrl+Z)">↩️ Undo</button>
+                    <span class="edit-hint">Click to select · Drag to move · Scroll to rotate</span>
+                </div>
+            </section>
+
+            <!-- Right Sidebar -->
+            <aside id="right-sidebar" class="sidebar">
+                <!-- Panel 1: Building Info -->
+                <div id="building-info-panel" class="panel">
+                    <h2>Building Information</h2>
+                    <h3 id="info-building-name">Modern Villa</h3>
+                    <div class="info-row">
+                        <span class="info-label">Dimensions:</span>
+                        <span id="info-dimensions" class="info-value">15m x 20m x 8m</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="info-row">
+                        <span class="info-label">Floors:</span>
+                        <span id="info-floors" class="info-value">2</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="info-row">
+                        <span class="info-label">Total Area:</span>
+                        <span id="info-area" class="info-value">300 sq m</span>
+                    </div>
+                    <div class="divider"></div>
+                    <p id="info-description">A stunning modern villa featuring minimalist design, large glass windows, and open spaces.</p>
+                </div>
+
+                <!-- Panel 2: Configuration Summary -->
+                <div id="config-summary-panel" class="panel">
+                    <h2>Configuration Summary</h2>
+                    <div class="info-row">
+                        <span class="info-label">Color Theme:</span>
+                        <span id="summary-color" class="info-value"><span class="color-dot" style="background-color: #F5F5F5;"></span> White</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="info-row">
+                        <span class="info-label">Active Features:</span>
+                    </div>
+                    <div id="summary-features" class="feature-badges">
+                        <span class="feature-badge">None</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="info-row">
+                        <span class="info-label">View Mode:</span>
+                        <span id="summary-view" class="info-value">Exterior</span>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Room Details -->
+                <div id="room-details-panel" class="panel">
+                    <h2>Room Layout</h2>
+                    <div id="room-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Bottom action bar -->
+        <footer id="action-bar">
+            <button id="btn-apply">✨ Apply Changes</button>
+            <button id="btn-edit-mode">✏️ Edit Layout</button>
+            <button id="btn-reset">🔄 Reset to Default</button>
+            <div id="status-text">Ready</div>
+        </footer>
+    </div>
+
+    <!-- Tooltip container -->
+    <div id="tooltip" class="hidden"></div>
+
+    <script type="module" src="js/main.js?v=23"></script>
+</body>
+</html>
