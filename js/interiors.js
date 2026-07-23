@@ -1075,94 +1075,198 @@ export function createFloorInterior(buildingType, floorIndex) {
         addPersonToFloor(group, '#E63946', 0, 0, 10, -4, 0.3, 'z');
 
     } else if (buildingType === 'university') {
-        // --- UNIVERSITY INTERIOR ---
-        const uniFloor = new THREE.Mesh(new THREE.BoxGeometry(32, 0.04, 20), new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.5 }));
+        // --- MASTER ARCHITECTURAL UNIVERSITY INTERIOR (36m x 22m) ---
+        const uniFloor = new THREE.Mesh(new THREE.BoxGeometry(36, 0.04, 22), new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.5 }));
         group.add(uniFloor);
 
-        // Central Elevator / Lift
+        // Central Elevator / Lift Core with Brushed Steel Trim
         const lift = createElevatorLift();
-        lift.position.set(0, 0, -6);
+        lift.position.set(-14, 0, -5);
         group.add(lift);
 
         if (floorIndex === 0) {
-            // Floor 0: Grand Auditorium / Lecture Hall
-            const podium = new THREE.Mesh(new THREE.BoxGeometry(4, 0.4, 2.5), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
-            podium.position.set(0, 0.2, -6.5);
+            // FLOOR G: GRAND RECEPTION FOYER, ADMIN SUITE & AUDITORIUM
+            // 1. Reception Center
+            const reception = createReceptionDesk();
+            reception.position.set(-11, 0, 3);
+            group.add(reception);
+
+            // 2. Grand Foyer Lounge
+            const sofaL = createSofa('#1E293B');
+            sofaL.position.set(-3, 0, 4);
+            group.add(sofaL);
+            const sofaR = createSofa('#1E293B');
+            sofaR.position.set(3, 0, 4);
+            group.add(sofaR);
+
+            // 3. Admin Office Suite
+            const adminDesk = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.75, 1.2), new THREE.MeshStandardMaterial({ color: '#475569' }));
+            adminDesk.position.set(11, 0.375, 3);
+            adminDesk.castShadow = true;
+            group.add(adminDesk);
+            const adminChair = createChair('#0F172A');
+            adminChair.position.set(11, 0, 2.2);
+            group.add(adminChair);
+
+            // 4. Main Lecture Auditorium Stage & Seating
+            const podium = new THREE.Mesh(new THREE.BoxGeometry(4, 0.3, 2.2), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
+            podium.position.set(0, 0.15, -7);
             group.add(podium);
 
-            for (let row = 0; row < 4; row++) {
-                const rowZ = -2 + row * 2.8;
+            const displayBoard = new THREE.Mesh(new THREE.BoxGeometry(6.0, 1.8, 0.08), new THREE.MeshStandardMaterial({ color: '#0F172A', roughness: 0.2 }));
+            displayBoard.position.set(0, 1.6, -9.5);
+            group.add(displayBoard);
+
+            for (let row = 0; row < 3; row++) {
+                const rowZ = -4.5 + row * 2.2;
                 for (let c = 0; c < 5; c++) {
                     const deskL = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.05, 0.6), new THREE.MeshStandardMaterial({ color: '#4A2C11' }));
-                    deskL.position.set(-11 + c * 2.1, 0.7, rowZ);
+                    deskL.position.set(-9 + c * 2.1, 0.7, rowZ);
                     group.add(deskL);
-
                     const chairL = createChair('#334155');
-                    chairL.position.set(-11 + c * 2.1, 0, rowZ + 0.35);
+                    chairL.position.set(-9 + c * 2.1, 0, rowZ + 0.35);
                     group.add(chairL);
 
                     const deskR = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.05, 0.6), new THREE.MeshStandardMaterial({ color: '#4A2C11' }));
                     deskR.position.set(1 + c * 2.1, 0.7, rowZ);
                     group.add(deskR);
-
                     const chairR = createChair('#334155');
                     chairR.position.set(1 + c * 2.1, 0, rowZ + 0.35);
                     group.add(chairR);
                 }
             }
 
-            const professor = createPerson('#1E1B4B');
-            professor.position.set(0, 0, -5.5);
-            group.add(professor);
+            addPersonToFloor(group, '#0284C7', -8, 8, 3, 3, 0.5, 'x');
+            addPersonToFloor(group, '#0EA5E9', 0, 0, -3, 4, 0.4, 'z');
 
         } else if (floorIndex === 1) {
-            // Floor 1: Science & Computer Laboratories
-            const labMat = new THREE.MeshStandardMaterial({ color: '#0F172A', roughness: 0.3 });
-            for (let r = 0; r < 2; r++) {
-                const z = -2 + r * 5;
-                const benchL = new THREE.Mesh(new THREE.BoxGeometry(8, 0.85, 1.2), labMat);
-                benchL.position.set(-6, 0.425, z);
-                benchL.castShadow = true;
-                group.add(benchL);
+            // FLOOR 1: DUAL AUDITORIUM LECTURE HALLS & SEMINAR ROOMS
+            const boardA = new THREE.Mesh(new THREE.BoxGeometry(5.0, 1.5, 0.06), new THREE.MeshStandardMaterial({ color: '#0F172A' }));
+            boardA.position.set(-9, 1.5, 6.5);
+            const boardB = new THREE.Mesh(new THREE.BoxGeometry(5.0, 1.5, 0.06), new THREE.MeshStandardMaterial({ color: '#0F172A' }));
+            boardB.position.set(9, 1.5, 6.5);
+            group.add(boardA, boardB);
 
-                const benchR = new THREE.Mesh(new THREE.BoxGeometry(8, 0.85, 1.2), labMat);
-                benchR.position.set(6, 0.425, z);
+            // Lecture Halls Seating Tiers
+            for (let r = 0; r < 3; r++) {
+                const z = 4.5 - r * 2.2;
+                for (let c = 0; c < 3; c++) {
+                    const dA = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.6), new THREE.MeshStandardMaterial({ color: '#5C4033' }));
+                    dA.position.set(-11.5 + c * 2.5, 0.7, z);
+                    const cA = createChair('#334155');
+                    cA.position.set(-11.5 + c * 2.5, 0, z - 0.35);
+                    group.add(dA, cA);
+
+                    const dB = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.6), new THREE.MeshStandardMaterial({ color: '#5C4033' }));
+                    dB.position.set(6.5 + c * 2.5, 0.7, z);
+                    const cB = createChair('#334155');
+                    cB.position.set(6.5 + c * 2.5, 0, z - 0.35);
+                    group.add(dB, cB);
+                }
+            }
+
+            // Seminar Rooms
+            const semTable1 = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.05, 1.6), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
+            semTable1.position.set(-8, 0.7, -5);
+            const semTable2 = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.05, 1.6), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
+            semTable2.position.set(8, 0.7, -5);
+            group.add(semTable1, semTable2);
+
+            addPersonToFloor(group, '#2563EB', -10, 10, 0, 0, 0.5, 'x');
+
+        } else if (floorIndex === 2) {
+            // FLOOR 2: COMPUTER, AI & ROBOTICS LABORATORIES
+            const labMat = new THREE.MeshStandardMaterial({ color: '#0F172A', roughness: 0.3 });
+
+            // Computer Science & AI Workstations (Left Wing)
+            for (let r = 0; r < 2; r++) {
+                const z = 1.0 + r * 3.8;
+                const bench = new THREE.Mesh(new THREE.BoxGeometry(10, 0.85, 1.2), labMat);
+                bench.position.set(-9, 0.425, z);
+                bench.castShadow = true;
+                group.add(bench);
+
+                for (let i = 0; i < 4; i++) {
+                    const pc = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.4, 0.05), new THREE.MeshStandardMaterial({ color: '#38BDF8', roughness: 0.2 }));
+                    pc.position.set(-12.5 + i * 2.2, 1.05, z);
+                    const chair = createChair('#0284C7');
+                    chair.position.set(-12.5 + i * 2.2, 0, z - 0.8);
+                    group.add(pc, chair);
+                }
+            }
+
+            // Robotics & Wet Science Lab (Right Wing)
+            for (let r = 0; r < 2; r++) {
+                const z = 1.0 + r * 3.8;
+                const benchR = new THREE.Mesh(new THREE.BoxGeometry(10, 0.85, 1.2), labMat);
+                benchR.position.set(9, 0.425, z);
                 benchR.castShadow = true;
                 group.add(benchR);
 
-                for (let i = 0; i < 4; i++) {
-                    const pcL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.05), new THREE.MeshStandardMaterial({ color: '#38BDF8' }));
-                    pcL.position.set(-8.5 + i * 1.8, 1.05, z);
-                    group.add(pcL);
-
-                    const pcR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.05), new THREE.MeshStandardMaterial({ color: '#38BDF8' }));
-                    pcR.position.set(3.5 + i * 1.8, 1.05, z);
-                    group.add(pcR);
+                for (let i = 0; i < 3; i++) {
+                    const eq = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.5, 0.6), new THREE.MeshStandardMaterial({ color: '#F43F5E' }));
+                    eq.position.set(6.5 + i * 2.6, 1.1, z);
+                    group.add(eq);
                 }
             }
-            addPersonToFloor(group, '#0284C7', -8, 8, 2, 2, 0.5, 'x');
 
-        } else if (floorIndex === 2) {
-            // Floor 2: University Library
-            for (let i = 0; i < 6; i++) {
+            // Central Server Rack Enclosure
+            const serverRack = new THREE.Mesh(new THREE.BoxGeometry(3.5, 2.2, 1.8), new THREE.MeshStandardMaterial({ color: '#1E293B', metalness: 0.8 }));
+            serverRack.position.set(0, 1.1, -5);
+            group.add(serverRack);
+
+            addPersonToFloor(group, '#0284C7', -8, 8, 0, 0, 0.5, 'x');
+
+        } else if (floorIndex === 3) {
+            // FLOOR 3: UNIVERSITY LIBRARY & MEDIA COMMONS
+            // 6 Bookshelf Stacks (Left Wing)
+            for (let i = 0; i < 5; i++) {
                 const bs = createBookshelf('#78350F');
-                bs.position.set(-11 + i * 4.2, 0, 3);
+                bs.position.set(-13 + i * 2.8, 0, 2);
                 group.add(bs);
             }
-            const readTable = new THREE.Mesh(new THREE.BoxGeometry(6.0, 0.05, 1.8), new THREE.MeshStandardMaterial({ color: '#5C4033' }));
-            readTable.position.set(0, 0.7, -3.0);
+
+            // Quiet Study Carrels (Right Wing)
+            const readTable = new THREE.Mesh(new THREE.BoxGeometry(8.0, 0.05, 2.2), new THREE.MeshStandardMaterial({ color: '#5C4033' }));
+            readTable.position.set(8, 0.7, 2.0);
             readTable.castShadow = true;
             group.add(readTable);
 
-            addPersonToFloor(group, '#B45309', -6, 6, -3, -3, 0.3, 'x');
+            for (let c = 0; c < 4; c++) {
+                const chair = createChair('#334155');
+                chair.position.set(5.5 + c * 1.8, 0, 0.8);
+                group.add(chair);
+            }
+
+            // Group Study Pods
+            const studyPod = new THREE.Mesh(new THREE.BoxGeometry(4.5, 0.05, 2.0), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
+            studyPod.position.set(0, 0.7, -6.0);
+            group.add(studyPod);
+
+            addPersonToFloor(group, '#B45309', -6, 6, -2, -2, 0.3, 'x');
 
         } else {
-            // Faculty Offices & Student Lounge
-            for (let i = 0; i < 4; i++) {
+            // FLOOR 4: FACULTY OFFICES, CONFERENCE & POSTGRADUATE LOUNGE
+            // Faculty Cubicles / Offices (Left Wing)
+            for (let i = 0; i < 3; i++) {
                 const cub = createOfficeCubicle();
-                cub.position.set(-9 + i * 5, 0, 2);
+                cub.position.set(-11 + i * 3.8, 0, 3);
                 group.add(cub);
             }
+
+            // Executive Department Conference Table (Right Wing)
+            const confTable = new THREE.Mesh(new THREE.BoxGeometry(5.5, 0.05, 2.0), new THREE.MeshStandardMaterial({ color: '#1E293B' }));
+            confTable.position.set(8, 0.7, 3.0);
+            group.add(confTable);
+            for (let c = 0; c < 4; c++) {
+                const chairL = createChair('#0F172A');
+                chairL.position.set(5.8 + c * 1.4, 0, 1.8);
+                const chairR = createChair('#0F172A');
+                chairR.position.set(5.8 + c * 1.4, 0, 4.2);
+                group.add(chairL, chairR);
+            }
+
+            // Student & Faculty Lounge (Center)
             const sofa = createSofa('#047857');
             sofa.position.set(0, 0, -4);
             group.add(sofa);

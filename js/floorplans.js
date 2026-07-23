@@ -114,31 +114,30 @@ export function createFloorPlan(buildingType, floorIndex = 0) {
         }
     } else if (buildingType === 'university') {
         if (floorIndex === 0) {
-            group.add(createRoom('Grand Foyer', 15, 8, 0, 3, '#4CAF50'));
-            group.add(createRoom('Admin Office', 6, 5, -12, 2, '#FF9800'));
-            group.add(createRoom('Reception', 6, 5, 12, 2, '#607D8B'));
-            group.add(createRoom('Restrooms', 4, 3, 0, -6, '#9C27B0'));
-            group.add(createRoom('Staircase', 4, 4, -15, 0, '#795548'));
+            group.add(createRoom('Grand Foyer & Atrium', 16, 10, 0, 3, '#4CAF50'));
+            group.add(createRoom('Reception Center', 7, 5, -11, 3, '#2196F3'));
+            group.add(createRoom('Admin Suite', 7, 5, 11, 3, '#FF9800'));
+            group.add(createRoom('Main Auditorium', 14, 6, 0, -6, '#F44336'));
+            group.add(createRoom('Elevator Core', 4, 4, -14, -5, '#795548'));
         } else if (floorIndex === 1) {
-            group.add(createRoom('Lecture Hall A', 10, 8, -8, 3, '#4CAF50'));
-            group.add(createRoom('Lecture Hall B', 10, 8, 8, 3, '#66BB6A'));
-            group.add(createRoom('Corridor', 25, 2, 0, 0, '#607D8B'));
-            group.add(createRoom('Staircase', 4, 4, -15, 0, '#795548'));
+            group.add(createRoom('Lecture Hall A', 11, 8, -9, 3, '#4CAF50'));
+            group.add(createRoom('Lecture Hall B', 11, 8, 9, 3, '#66BB6A'));
+            group.add(createRoom('Central Corridor', 30, 2, 0, 0, '#607D8B'));
+            group.add(createRoom('Seminar Room 1', 6, 5, -8, -5, '#FF9800'));
+            group.add(createRoom('Seminar Room 2', 6, 5, 8, -5, '#FFA726'));
         } else if (floorIndex === 2) {
-            group.add(createRoom('Chemistry Lab', 8, 6, -8, 3, '#F44336'));
-            group.add(createRoom('Computer Lab', 8, 6, 8, 3, '#2196F3'));
-            group.add(createRoom('Corridor', 25, 2, 0, 0, '#607D8B'));
-            group.add(createRoom('Prep Room', 5, 3, 0, -5, '#FF9800'));
+            group.add(createRoom('Computer & AI Lab', 11, 8, -9, 3, '#2196F3'));
+            group.add(createRoom('Robotics & Science Lab', 11, 8, 9, 3, '#F44336'));
+            group.add(createRoom('Central Corridor', 30, 2, 0, 0, '#607D8B'));
+            group.add(createRoom('Lab Prep & Server Room', 8, 4, 0, -5, '#9C27B0'));
         } else if (floorIndex === 3) {
-            group.add(createRoom('Library', 20, 10, 0, 2, '#8B6914'));
-            group.add(createRoom('Reading Area', 12, 3, 0, -5, '#CDDC39'));
-            group.add(createRoom('Staircase', 4, 4, -15, 0, '#795548'));
+            group.add(createRoom('Main Library Stacks', 14, 9, -8, 2, '#8B6914'));
+            group.add(createRoom('Study Commons & Pods', 12, 9, 8, 2, '#CDDC39'));
+            group.add(createRoom('Group Study Rooms', 10, 4, 0, -6, '#00BCD4'));
         } else if (floorIndex === 4) {
-            group.add(createRoom('Faculty Office A', 6, 5, -8, 3, '#FF9800'));
-            group.add(createRoom('Faculty Office B', 6, 5, 0, 3, '#FFA726'));
-            group.add(createRoom('Faculty Office C', 6, 5, 8, 3, '#FFB74D'));
-            group.add(createRoom('Student Lounge', 10, 5, 0, -4, '#4CAF50'));
-            group.add(createRoom('Staircase', 4, 4, -15, 0, '#795548'));
+            group.add(createRoom('Faculty Offices Suite', 14, 6, -8, 3, '#FF9800'));
+            group.add(createRoom('Department Conference', 10, 6, 8, 3, '#3F51B5'));
+            group.add(createRoom('Postgraduate Lounge', 12, 5, 0, -4, '#4CAF50'));
         }
     } else if (buildingType === 'cathedral') {
         group.add(createRoom('Main Nave', 10, 25, 0, 2, '#4CAF50'));
