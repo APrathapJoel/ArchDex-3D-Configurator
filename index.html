@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=26">
+    <link rel="stylesheet" href="style.css?v=27">
     <script type="importmap">
     {
       "imports": {
@@ -59,10 +59,14 @@
             </div>
         </header>
 
+        <!-- Mobile / Split Screen Backdrop -->
+        <div id="mobile-drawer-backdrop" class="drawer-backdrop"></div>
+
         <!-- Main content area -->
         <main id="main-content">
             <!-- Left Sidebar -->
             <aside id="left-sidebar" class="sidebar">
+                <button class="drawer-close-btn" id="btn-close-left-drawer" title="Close Panel">✕</button>
                 <!-- Panel 1: Color Theme -->
                 <div id="color-selection-panel" class="panel">
                     <h2>Color Theme</h2>
@@ -453,6 +457,14 @@
             <section id="viewport-container">
                 <div id="canvas-container"></div>
 
+                <!-- Mobile / Split Screen Drawer Toggle Buttons -->
+                <button id="btn-toggle-left" class="mobile-drawer-btn left-drawer-btn" title="Toggle Design Options">
+                    <span>🎨</span> <span>Options</span>
+                </button>
+                <button id="btn-toggle-right" class="mobile-drawer-btn right-drawer-btn" title="Toggle Information">
+                    <span>📊</span> <span>Info</span>
+                </button>
+
                 <button id="btn-enlarge-canvas" class="enlarge-btn" title="Toggle Fullscreen Screen Design Canvas">
                     <span id="enlarge-icon">⤢</span> <span id="enlarge-text">Enlarge Screen</span>
                 </button>
@@ -480,6 +492,7 @@
 
             <!-- Right Sidebar -->
             <aside id="right-sidebar" class="sidebar">
+                <button class="drawer-close-btn" id="btn-close-right-drawer" title="Close Panel">✕</button>
                 <!-- Panel 1: Building Info -->
                 <div id="building-info-panel" class="panel">
                     <h2>Building Information</h2>
@@ -545,6 +558,6 @@
     <!-- Tooltip container -->
     <div id="tooltip" class="hidden"></div>
 
-    <script type="module" src="js/main.js?v=26"></script>
+    <script type="module" src="js/main.js?v=27"></script>
 </body>
 </html>

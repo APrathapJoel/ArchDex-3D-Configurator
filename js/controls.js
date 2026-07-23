@@ -281,6 +281,45 @@ export function initControls(callbacks) {
     });
   }
 
+  // 7.7. Mobile / Split-Screen Drawer Toggles
+  const btnToggleLeft = document.getElementById('btn-toggle-left');
+  const btnToggleRight = document.getElementById('btn-toggle-right');
+  const btnCloseLeft = document.getElementById('btn-close-left-drawer');
+  const btnCloseRight = document.getElementById('btn-close-right-drawer');
+  const drawerBackdrop = document.getElementById('mobile-drawer-backdrop');
+
+  const closeDrawers = () => {
+    document.body.classList.remove('left-drawer-open', 'right-drawer-open');
+    if (btnToggleLeft) btnToggleLeft.classList.remove('active');
+    if (btnToggleRight) btnToggleRight.classList.remove('active');
+  };
+
+  if (btnToggleLeft) {
+    btnToggleLeft.addEventListener('click', () => {
+      const isOpen = document.body.classList.contains('left-drawer-open');
+      closeDrawers();
+      if (!isOpen) {
+        document.body.classList.add('left-drawer-open');
+        btnToggleLeft.classList.add('active');
+      }
+    });
+  }
+
+  if (btnToggleRight) {
+    btnToggleRight.addEventListener('click', () => {
+      const isOpen = document.body.classList.contains('right-drawer-open');
+      closeDrawers();
+      if (!isOpen) {
+        document.body.classList.add('right-drawer-open');
+        btnToggleRight.classList.add('active');
+      }
+    });
+  }
+
+  if (btnCloseLeft) btnCloseLeft.addEventListener('click', closeDrawers);
+  if (btnCloseRight) btnCloseRight.addEventListener('click', closeDrawers);
+  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawers);
+
   // 8. Reset button
   const btnReset = document.getElementById('btn-reset');
   if (btnReset) {
